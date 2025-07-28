@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Image Carousel</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .carousel-container {
+      position: relative;
+      max-width: 100%;
+      margin: auto;
+      overflow: hidden;
+    }
+
+    .carousel-slide {
+      display: none;
+      width: 100%;
+    }
+
+    .carousel-slide img {
+  width: 100%;
+  height: auto;
+  max-height: 100vh;
+  object-fit: contain;
+  display: block;
+  margin: auto;
+  background-color: black;
+}
+
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 16px;
+      color: white;
+      font-weight: bold;
+      font-size: 24px;
+      user-select: none;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .prev {
+      left: 0;
+    }
+
+    .next {
+      right: 0;
+    }
+
+    .dot-container {
+      text-align: center;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .dot {
+      height: 12px;
+      width: 12px;
+      margin: 0 4px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .active {
+      background-color: #717171;
+    }
+  </style>
+</head>
+<body>
+
+<div class="carousel-container">
+  <div class="carousel-slide"><img src="DSC07592.jpg" alt="Slide 1" /></div>
+  <div class="carousel-slide"><img src="DSC07598.jpg" alt="Slide 2" /></div>
+  <div class="carousel-slide"><img src="DSC07581.jpg" alt="Slide 3" /></div>
+  <div class="carousel-slide"><img src="DSC07559.jpg" alt="Slide 4" /></div>
+  <div class="carousel-slide"><img src="DSC07571.jpg" alt="Slide 5" /></div>
+  <div class="carousel-slide"><img src="DSC07576.jpg" alt="Slide 6" /></div>
+  <div class="carousel-slide"><img src="DSC07575.jpg" alt="Slide 7" /></div>
+  <div class="carousel-slide"><img src="DSC07723.jpg" alt="Slide 8" /></div>
+  <div class="carousel-slide"><img src="DSC07788-2.jpg" alt="Slide 9" /></div>
+
+  <a class="prev" onclick="changeSlide(-1)">❮</a>
+  <a class="next" onclick="changeSlide(1)">❯</a>
+</div>
+
+<div class="dot-container">
+  <span class="dot" onclick="goToSlide(1)"></span>
+  <span class="dot" onclick="goToSlide(2)"></span>
+  <span class="dot" onclick="goToSlide(3)"></span>
+  <span class="dot" onclick="goToSlide(4)"></span>
+  <span class="dot" onclick="goToSlide(5)"></span>
+  <span class="dot" onclick="goToSlide(6)"></span>
+  <span class="dot" onclick="goToSlide(7)"></span>
+  <span class="dot" onclick="goToSlide(8)"></span>
+  <span class="dot" onclick="goToSlide(9)"></span>
+</div>
+
+<script>
+  let slideIndex = 0;
+  let slides = document.getElementsByClassName("carousel-slide");
+  let dots = document.getElementsByClassName("dot");
+  let timer;
+
+  function showSlide(n) {
+    if (n >= slides.length) slideIndex = 0;
+    if (n < 0) slideIndex = slides.length - 1;
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+    for (let i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+    }
+    slides[slideIndex].style.display = "block";
+    dots[slideIndex].className += " active";
+  }
+
+  function changeSlide(n) {
+    clearInterval(timer);
+    slideIndex += n;
+    showSlide(slideIndex);
+    startTimer();
+  }
+
+  function goToSlide(n) {
+    clearInterval(timer);
+    slideIndex = n - 1;
+    showSlide(slideIndex);
+    startTimer();
+  }
+
+  function startTimer() {
+    timer = setInterval(() => {
+      slideIndex++;
+      showSlide(slideIndex);
+    }, 3000);
+  }
+
+  // Initialize
+  showSlide(slideIndex);
+  startTimer();
+</script>
+
+</body>
+</html>
